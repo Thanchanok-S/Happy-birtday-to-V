@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gift Box Surprise Cake</title>
+<style>
+  body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: linear-gradient(to top, #ffe6f0, #ffffff);
+    overflow: hidden;
+    flex-direction: column;
+    font-family: Arial, sans-serif;
+  }
+
+  #gift-box {
+    cursor: pointer;
+    transition: transform 0.3s;
+  }
+
+  #gift-box:hover {
+    transform: scale(1.05);
+  }
+
+  .lid, .bow {
+    transform-origin: center bottom;
+    transition: transform 1s ease;
+  }
+
+  #cake-container {
+    display: none; /* ซ่อนเค้กก่อนเปิด */
+  }
+
+  #box-text {
+    font-size: 24px;
+    color: #ff3399;
+    margin-bottom: 20px;
+    transition: opacity 1s ease;
+  }
+
+  svg {
+    width: 300px;
+    height: 450px;
+  }
+
+  /* Candle flame animation */
+  .flame {
+    animation: flicker 0.6s infinite alternate, swing 1s infinite alternate;
+    transform-origin: center bottom;
+  }
+  @keyframes flicker {
+    0% { fill: #FFD700; opacity: 1; transform: scale(1); }
+    50% { fill: #FFEA00; opacity: 0.8; transform: scale(1.2); }
+    100% { fill: #FFD700; opacity: 1; transform: scale(1); }
+  }
+  @keyframes swing {
+    0% { transform: translateX(0); }
+    50% { transform: translateX(2px); }
+    100% { transform: translateX(0); }
+  }
+
+  /* Floating Bubbles */
+  .bubble {
+    fill: #ff99ff;
+    opacity: 0.7;
+    animation: rise 4s linear infinite;
+  }
+  @keyframes rise {
+    0% { transform: translateY(0) scale(0.5); opacity: 0.7; }
+    50% { opacity: 1; }
+    100% { transform: translateY(-300px) scale(1); opacity: 0; }
+  }
+
+  /* Cake gradient */
+  .cake-layer {
+    animation: gradientShift 4s ease-in-out infinite alternate;
+  }
+  @keyframes gradientShift {
+    0% { fill: #ff3399; }
+    25% { fill: #ff66b2; }
+    50% { fill: #ffccff; }
+    75% { fill: #ff99cc; }
+    100% { fill: #ff3399; }
+  }
+
+  /* Cream */
+  .cream {
+    fill: #fff;
+  }
+</style>
+</head>
+<body>
+
+<h2 id="box-text">HBD เปิดกล่องได้เยยย</h2>
+
+<!-- Gift box with bow -->
+<svg id="gift-box" width="250" height="250" viewBox="0 0 200 200">
+  <!-- Box lid -->
+  <rect x="35" y="60" width="130" height="30" class="lid" rx="10" ry="10" fill="#ff3366"/>
+  <!-- Bow -->
+  <path d="M85 60 Q100 40 115 60 Q100 50 85 60" class="bow" fill="#ffd700"/>
+</svg>
+
+<!-- Cake inside -->
+<div id="cake-container">
+  <svg viewBox="0 0 200 350">
+    <!-- Bottom Layer -->
+    <rect x="30" y="200" width="140" height="60" rx="20" ry="20" class="cake-layer"/>
+    <path d="M30 200 Q50 185 60 200 T100 200 T140 200 T170 200" class="cream"/>
+    <path d="M40 200 C45 190, 55 210, 60 200 C80 190, 120 210, 140 200" class="cream"/>
+
+    <!-- Middle Layer -->
+    <rect x="50" y="150" width="100" height="40" rx="15" ry="15" class="cake-layer"/>
+    <path d="M50 150 Q65 135 75 150 T100 150 T125 150 T150 150" class="cream"/>
+    <path d="M55 150 C60 140, 70 160, 75 150 C90 140, 120 160, 145 150" class="cream"/>
+
+    <!-- Top Layer -->
+    <rect x="70" y="120" width="60" height="30" rx="10" ry="10" class="cake-layer"/>
+    <path d="M70 120 Q85 110 90 120 T100 120 T110 120 T130 120" class="cream"/>
+    <path d="M75 120 C80 115, 85 125, 90 120 C100 115, 110 125, 125 120" class="cream"/>
+
+    <!-- Candles on top layer -->
+    <rect x="85" y="105" width="6" height="15" fill="#00ccff"/>
+    <rect x="95" y="105" width="6" height="15" fill="#ffcc00"/>
+    <rect x="105" y="105" width="6" height="15" fill="#00ff00"/>
+
+    <!-- Flame for candles -->
+    <ellipse cx="88" cy="102" rx="3" ry="6" class="flame"/>
+    <ellipse cx="98" cy="102" rx="3" ry="6" class="flame"/>
+    <ellipse cx="108" cy="102" rx="3" ry="6" class="flame"/>
+
+    <!-- Floating Bubbles -->
+    <circle cx="40" cy="300" r="5" class="bubble" style="animation-delay: 0s"/>
+    <circle cx="80" cy="320" r="7" class="bubble" style="animation-delay: 1s"/>
+    <circle cx="130" cy="310" r="6" class="bubble" style="animation-delay: 2s"/>
+    <circle cx="160" cy="330" r="4" class="bubble" style="animation-delay: 1.5s"/>
+
+    <!-- Happy Birthday Text -->
+    <text x="100" y="340" font-size="20" text-anchor="middle" fill="#ff3399" font-family="Arial" font-weight="bold">Happy Birthday To VEE</text>
+  </svg>
+</div>
+
+<script>
+  const box = document.getElementById('gift-box');
+  const lid = box.querySelector('.lid');
+  const bow = box.querySelector('.bow');
+  const cakeContainer = document.getElementById('cake-container');
+  const boxText = document.getElementById('box-text');
+
+  box.addEventListener('click', () => {
+    // เปิดฝา + โบว์
+    lid.style.transform = 'rotateX(180deg)';
+    bow.style.transform = 'rotateX(180deg)';
+    // fade out ข้อความ
+    boxText.style.opacity = '0';
+
+    // หลังจาก 0.8s ซ่อนกล่องและข้อความ
+    setTimeout(() => {
+      box.style.display = 'none';
+      boxText.style.display = 'none';
+      // แสดงเค้ก
+      cakeContainer.style.display = 'block';
+    }, 800);
+  });
+</script>
+
+</body>
+</html>
